@@ -20,7 +20,28 @@ public class BufferParser_g {
      * @return
      */
     public int readInt(){
-        return 0;
+        int number = bytes2Int(readByLength(startIndex, 4, buffer));
+        startIndex += 4;
+        return number;
+    }
+
+    /**
+     * 按照一个字节读取buffer
+     * @return
+     */
+    public byte readByte(){
+        return buffer[startIndex++];
+    }
+
+    /**
+     * 按照长度读取字节
+     * @param length
+     * @return
+     */
+    public byte[] readBytes(int length){
+        byte[] bytes = readByLength(startIndex, length, buffer);
+        startIndex += length;
+        return bytes;
     }
 
     /**
@@ -28,7 +49,7 @@ public class BufferParser_g {
      * @param bytes
      * @return
      */
-    public int bytes2Int(byte[] bytes){
+    public static int bytes2Int(byte[] bytes){
         int number = bytes[0];
         number |= (( bytes[1] << 8 ) & 0xFF00);
         number |= (( bytes[2] << 16 ) & 0xFF0000);
@@ -41,7 +62,7 @@ public class BufferParser_g {
      * @param number
      * @return
      */
-    public byte[] int2Bytes(int number){
+    public static byte[] int2Bytes(int number){
         byte[] b = new byte[4];
         b[0] = (byte)(number);
         b[1] = (byte)((number >> 8));
@@ -55,8 +76,11 @@ public class BufferParser_g {
      * @return
      */
     public static byte[] readByLength(int startIndex,int length,byte[] bytes){
-        return null;
+        byte[] b = new byte[length];
+        System.arraycopy(bytes,startIndex,b,0,length);
+        return b;
     }
+
 
     /**
      * 测试用例
@@ -66,5 +90,4 @@ public class BufferParser_g {
         BufferParser_g bf = new BufferParser_g();
         System.out.println(bf.bytes2Int(bf.int2Bytes(129999999)));
     }
-
 }
