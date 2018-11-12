@@ -56,15 +56,16 @@ public class BufferParser_g {
      * @param b2
      */
     public static byte[] combineBytes(byte[] b1,byte[] b2){
-        //其中一个为空，无法合并，返回空字节数组
-        if( b1 == null || b2 == null ){
-            return new byte[]{};
+        if(b1 == null && b2 != null){
+            return b2;
+        }else if(b1 != null && b2 == null){
+            return b1;
+        }else{
+            byte[] b3 = new byte[b1.length + b2.length];
+            System.arraycopy(b1,0,b3,0,b1.length);
+            System.arraycopy(b2,0,b3,b1.length,b2.length);
+            return b3;
         }
-
-        byte[] b3 = new byte[b1.length + b2.length];
-        System.arraycopy(b1,0,b3,0,b1.length);
-        System.arraycopy(b2,0,b3,b1.length,b2.length);
-        return b3;
     }
 
     /**
@@ -131,5 +132,7 @@ public class BufferParser_g {
     public static void main(String[] args) {
         BufferParser_g bf = new BufferParser_g();
         System.out.println(bf.bytes2Int(bf.int2Bytes(129999999)));
+        byte[] bytes = BufferParser_g.combineBytes(null, null);
+        System.out.println(bytes.length);
     }
 }
