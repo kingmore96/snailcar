@@ -26,6 +26,48 @@ public class BufferParser_g {
     }
 
     /**
+     * 写入长度，保存到bufferoutput的是很多字节，还需要记录长度，长度+字节是一个完整的部分
+     * @param length
+     */
+    public void writeInt(int length){
+        bufferOutPut = combineBytes(bufferOutPut,int2Bytes(length));
+    }
+
+    /**
+     * 写入字节
+     * @param bytes
+     */
+    public void writeBytes(byte[] bytes){
+        bufferOutPut = combineBytes(bufferOutPut,bytes);
+    }
+    /**
+     * 写入String到bufferoutput中
+     * @param temp
+     */
+    public void writeString(String temp){
+        byte[] bytes = temp.getBytes();
+        writeInt(bytes.length);
+        writeBytes(bytes);
+    }
+
+    /**
+     * 合并字节数组，使用System.arraycopy
+     * @param b1
+     * @param b2
+     */
+    public static byte[] combineBytes(byte[] b1,byte[] b2){
+        //其中一个为空，无法合并，返回空字节数组
+        if( b1 == null || b2 == null ){
+            return new byte[]{};
+        }
+
+        byte[] b3 = new byte[b1.length + b2.length];
+        System.arraycopy(b1,0,b3,0,b1.length);
+        System.arraycopy(b2,0,b3,b1.length,b2.length);
+        return b3;
+    }
+
+    /**
      * 按照一个字节读取buffer
      * @return
      */
