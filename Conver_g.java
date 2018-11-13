@@ -2,6 +2,8 @@ import java.nio.ByteBuffer;
 
 public class Conver_g {
 
+    //类所属字符串，用于字节数组转换为16进制字符串
+    private static String hex = "0123456789ABCDEF";
     //类所属的字节数组缓冲区，用于字节数组和long相互转换
     private static ByteBuffer byteBuffer = ByteBuffer.allocate(8);
 
@@ -34,7 +36,71 @@ public class Conver_g {
         return aLong;
     }
 
+    /**
+     * 16进制字符串转换为字节数组，16进制字符串（消息）是成对出现的，没有单数的情况。
+     * 一个字符由4位存储
+     * @param hex
+     * @return
+     */
+    public static byte[] hexString2Bytes(String hex){
+        if( hex == null ){
+            return null;
+        } else if (hex.length() == 0) {
+            return new byte[]{};
+        }else{
+            //新建字节数组存储转换后的字节
+            byte[] b = new byte[hex.length()/2];
+            int j = 0;
 
+            //每次处理两个
+            for (int i = 0; i < b.length; i++) {
+                char a1 = hex.charAt(j++);
+                char a2 = hex.charAt(j++);
+                b[i] = (byte)((parse(a1) << 4) | (parse(a2)));
+            }
+            return b;
+        }
+    }
+
+    /**
+     * 把字符转换为32位int
+     * @param c
+     * @return
+     */
+    private static int parse(char c){
+        if ( c >= 'a' ) {
+            return (c - 'a' + 10) & 0x0f;
+        }
+        if ( c >= 'A' ){
+            return (c - 'A' + 10) & 0x0f;
+        }
+        return (c - '0') & 0x0f;
+    }
+
+
+    /**
+     * 字节数组转换为16进制字符串
+     * @param bytes
+     * @return
+     */
+    public static String bytes2HexString(byte[] bytes){
+        if( bytes == null ){
+            return null;
+        }else if( bytes.length == 0 ){
+            return "";
+        }else{
+            //新建用于存储拼接字符串的StringBuilder
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < bytes.length; i++) {
+                //高4位
+                sb.append(hex.charAt(((bytes[i] >> 4) & 0x0f)));
+                //低四位
+                sb.append(hex.charAt((bytes[i] & 0x0f)));
+            }
+            return sb.toString();
+        }
+    }
 
     /**
      * 测试用例
@@ -44,6 +110,7 @@ public class Conver_g {
 
         long l = Conver_g.bytes2long(Conver_g.long2bytes((long) 123));
         System.out.println(l);
+        System.out.println(Conver_g.bytes2HexString(Conver_g.hexString2Bytes("AC123abcBFD3")));
 //        System.out.println("----------Test allocate--------");
 //        System.out.println("before alocate:"
 //                + Runtime.getRuntime().freeMemory());
