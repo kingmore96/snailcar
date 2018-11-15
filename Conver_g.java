@@ -103,6 +103,20 @@ public class Conver_g {
     }
 
     /**
+     * 单字节转换为16进制字符串,每四位转换一个16进制字符
+     * @param b
+     * @return
+     */
+    public static String byte2HexString(byte b){
+        StringBuilder sb = new StringBuilder();
+        //高4位
+        sb.append(hex.charAt(((b >> 4) & 0x0f)));
+        //低四位
+        sb.append(hex.charAt((b & 0x0f)));
+        return sb.toString();
+    }
+
+    /**
      * 测试用例
      * @param args
      */
