@@ -147,11 +147,30 @@ public class ConverTools_g {
     }
 
     /**
+     * 异或校验
+     * @param packet
+     * @return
+     */
+    public static byte getCheckSum(byte[] packet){
+        byte xor = 0;
+        if( packet == null || packet.length == 0 ){
+            return xor;
+        }
+
+        xor = packet[0];
+        for (int i = 1; i < packet.length; i++) {
+            xor ^= packet[i];
+        }
+        return xor;
+    }
+
+    /**
      * 测试用例
      * @param args
      */
     public static void main(String[] args) {
         System.out.println(ConverTools_g.num2HexIp(new Long("13311000029")));
         System.out.println(ConverTools_g.hexIp2Num(ConverTools_g.num2HexIp(new Long("13311000029"))));
+        System.out.println(new String(String.valueOf(ConverTools_g.getCheckSum("123".getBytes()))));
     }
 }
