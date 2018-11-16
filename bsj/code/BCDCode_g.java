@@ -1,3 +1,5 @@
+package bsj.code;
+
 import java.text.DecimalFormat;
 
 /**

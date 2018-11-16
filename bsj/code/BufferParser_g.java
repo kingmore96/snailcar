@@ -1,3 +1,5 @@
+package bsj.code;
+
 /**
  * 解析字节数组，解析器
  */
@@ -14,6 +16,10 @@ public class BufferParser_g {
     }
 
     public BufferParser_g(){};
+
+    public byte[] getBufferOutPut() {
+        return bufferOutPut;
+    }
 
     /**
      * 按照4个字节读buffer，并且转换为int类型返回
@@ -48,6 +54,14 @@ public class BufferParser_g {
         byte[] bytes = temp.getBytes();
         writeInt(bytes.length);
         writeBytes(bytes);
+    }
+
+    /**
+     * 单字节写入bufferOutput
+     * @param b
+     */
+    public void writeByte(byte b){
+        bufferOutPut = combineBytes(bufferOutPut,new byte[]{b});
     }
 
     /**
