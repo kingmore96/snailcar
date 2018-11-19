@@ -132,7 +132,7 @@ public class BufferParser_g {
      * 根据长度读取buffer中的数据，使用System.arraycopy
      * @return
      */
-    public static byte[] readByLength(int startIndex,int length,byte[] bytes){
+    public byte[] readByLength(int startIndex,int length,byte[] bytes){
         byte[] b = new byte[length];
         System.arraycopy(bytes,startIndex,b,0,length);
         return b;
