@@ -6,16 +6,16 @@ import bsj.message.CenterMessage_g;
 import java.io.UnsupportedEncodingException;
 
 /**
- * 修改UDP的IP和端口
+ * 修改TCP的IP和端口
  * 格式为：“xxx.xxx.xxx.xxx”,xxxxx ip不足3位要在前面补0，端口最大65535，需要ascii编码
  */
-public class Message69_g extends CenterMessage_g {
+public class Message76_g extends CenterMessage_g {
 
     private byte[] contents;
 
     @Override
     public byte[] getMsgType() {
-        return new byte[]{0x69};
+        return new byte[]{0x76};
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Message69_g extends CenterMessage_g {
      * @param port
      * @throws UnsupportedEncodingException
      */
-    public Message69_g(String ip,int port) throws UnsupportedEncodingException {
+    public Message76_g(String ip, int port) throws UnsupportedEncodingException {
         String[] strArr = ip.split("\\.");
         StringBuilder sb = new StringBuilder();
         sb.append("\"");
@@ -74,11 +74,11 @@ public class Message69_g extends CenterMessage_g {
      * @param args
      */
     public static void main(String[] args) throws UnsupportedEncodingException {
-        Message69_g message69_g = new Message69_g("219.232.191.073",8890);
-        message69_g.setIp("00000000");
-        String s = Conver_g.bytes2HexString(message69_g.getContents());
+        Message76_g message76_g = new Message76_g("219.232.191.073",8890);
+        message76_g.setIp("00000000");
+        String s = Conver_g.bytes2HexString(message76_g.getContents());
         System.out.println(s);
-        String s1 = Conver_g.bytes2HexString(message69_g.buildMessage());
+        String s1 = Conver_g.bytes2HexString(message76_g.buildMessage());
         System.out.println(s1);
     }
 }
