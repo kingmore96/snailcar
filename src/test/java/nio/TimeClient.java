@@ -11,6 +11,7 @@ import java.nio.channels.SocketChannel;
 public class TimeClient {
     private static int connectTimeOut = 3000;
     private static ByteBuffer buffer = ByteBuffer.allocate("GET CURRENT TIME".length());
+    private static ByteBuffer buffer1 = ByteBuffer.allocateDirect(1024);
 
     public static void main(String[] args) {
         SocketChannel socketChannel = null;
@@ -33,12 +34,12 @@ public class TimeClient {
                 buffer.clear();
 
                 //接收响应
-                if(socketChannel.read(buffer) > 0){
-                    buffer.flip();
-                    byte[] response = new byte[buffer.remaining()];
-                    buffer.get(response);
+                if(socketChannel.read(buffer1) > 0){
+                    buffer1.flip();
+                    byte[] response = new byte[buffer1.remaining()];
+                    buffer1.get(response);
                     System.out.println("response:"+new String(response));
-                    buffer.clear();
+                    buffer1.clear();
                 }
                 Thread.sleep(2000);
 
