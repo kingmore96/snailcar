@@ -6,10 +6,10 @@ import java.sql.Timestamp;
  * 创建人，创建时间，更新人，更新时间
  */
 public class BaseEntity {
-    private String createUser;
-    private Timestamp createTime;
-    private String updateUser;
-    private Timestamp updateTime;
+    protected String createUser;
+    protected Timestamp createTime;
+    protected String updateUser;
+    protected Timestamp updateTime;
 
 
 
